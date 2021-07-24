@@ -1,0 +1,4 @@
+outs:
+- md5: 76e7b5618ce2153fefc9c7fcb19fc8e3
+  size: 120391201
+  path: best_resnet50.pth
