@@ -47,5 +47,6 @@ RUN git clone https://github.com/DmVol/mlops.git
 
 COPY config.yml /root/.fastai/config.yml
 COPY run.sh /run.sh
+COPY data /notebooks/mlops/data
 
 CMD ["/run.sh"]
