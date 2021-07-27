@@ -1,5 +1,4 @@
-Flask
-gunicorn
-fastai==1.0.24
+flask
+fastai==1.0.57
 torch
-flask_cors
+torchvision

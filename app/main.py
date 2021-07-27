@@ -1,29 +1,46 @@
-from flask import Flask, request, jsonify
-from fastai.basic_train import load_learner
-from fastai.vision import open_image
-from flask_cors import CORS,cross_origin
+import json
+import urllib.request
+from pathlib import Path
+from flask import Flask, jsonify
+from flask import request
+from fastai.vision import *
 app = Flask(__name__)
-CORS(app, support_credentials=True)
 
-# load the learner
-learn = load_learner(path='./models', file='best_resnet50.pth')
-classes = learn.data.classes
+@app.route('/ping')
+def ping():
+    return {'success': 'pong'}, 200
 
-
-def predict_single(img_file):
-    'function to take image and return prediction'
-    prediction = learn.predict(open_image(img_file))
-    probs_list = prediction[2].numpy()
-    return {
-        'category': classes[prediction[1].item()],
-        'probs': {c: round(float(probs_list[i]), 5) for (i, c) in enumerate(classes)}
-    }
-
-
-# route for prediction
-@app.route('/predict', methods=['POST'])
+@app.route('/predict')
 def predict():
-    return jsonify(predict_single(request.files['image']))
+    path = Path('./models')
+    learner = load_learner(path, 'export.pkl')
+    img = open_image('./tmp/image.jpg')
+    pred_class,pred_idx,outputs = learner.predict(img)
+    proc = str(outputs[pred_idx])[9:11]+'%'
+    result = f"breed: {pred_class}, accuracy: {proc}"
+    return {'success': result}, 200
+
+@app.route('/classification')
+def classification():
+
+    path = Path('./models')
+    learner = load_learner(path, 'export.pkl')
+    
+    image = request.args['image']
+    urllib.request.urlretrieve(image, './tmp/image.jpg')
+    img = open_image('./tmp/image.jpg')
+    pred_class,pred_idx,outputs = learner.predict(img)
+
+    result = json.dumps({
+        "predictions": sorted(
+            zip(learner.data.classes, map(float, outputs)),
+            key=lambda p: p[1],
+            reverse=True
+        )
+    })
+    print(result)
+
+    return {'success': 'pong'}, 200
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
