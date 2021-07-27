@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app, support_credentials=True)
 
 # load the learner
-learn = load_learner(path='./test', file='best_resnet50.pth')
+learn = load_learner(path='./models', file='best_resnet50.pth')
 classes = learn.data.classes
 
 
