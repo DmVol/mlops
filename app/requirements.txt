@@ -3,4 +3,3 @@ gunicorn
 fastai==1.0.61
 torch==1.6.0
 torchvision==0.7.0
-flask_cors
