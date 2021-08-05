@@ -28,6 +28,8 @@ services:
         - AIRFLOW_LOAD_EXAMPLES=no
       volumes:
         - airflow_scheduler_data:/bitnami
+        - ./new_images:/bitnami/new_images
+        - ./app/tmp:/bitnami/load_images
         - ./airflow/dags:/opt/bitnami/airflow/dags
         - ./airflow/requirements.txt:/bitnami/python/requirements.txt
     airflow-worker:
@@ -42,6 +44,8 @@ services:
         - AIRFLOW_WEBSERVER_HOST=airflow
       volumes:
         - airflow_worker_data:/bitnami
+        - ./new_images:/bitnami/new_images
+        - ./app/tmp/:/bitnami/load_images
         - ./airflow/dags:/opt/bitnami/airflow/dags
         - ./airflow/requirements.txt:/bitnami/python/requirements.txt
     airflow:
@@ -57,6 +61,8 @@ services:
       volumes:
         - airflow_data:/bitnami
         - ./airflow/dags:/opt/bitnami/airflow/dags
+        - ./new_images:/bitnami/new_images
+        - ./app/tmp:/bitnami/load_images
         - ./airflow/requirements.txt:/bitnami/python/requirements.txt
     ml-flask:
         container_name: ml-flask
