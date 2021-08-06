@@ -114,3 +114,6 @@ dmypy.json
 .pyre/
 /data
 /best_resnet50.pth
+
+# All images data
+*.jpg

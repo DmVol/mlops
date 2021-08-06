@@ -1,9 +1,10 @@
-import json
-import urllib.request
 from pathlib import Path
 from flask import Flask, jsonify
 from flask import request
 from fastai.vision import *
+import os
+import shutil
+
 app = Flask(__name__)
 
 @app.route('/ping')
@@ -14,33 +15,21 @@ def ping():
 def predict():
     path = Path('./models')
     learner = load_learner(path, 'export.pkl')
-    img = open_image('./tmp/image.jpg')
-    pred_class,pred_idx,outputs = learner.predict(img)
-    proc = str(outputs[pred_idx])[9:11]+'%'
+
+    src_folder = './ml_image_processing/'
+    file_names = os.listdir(src_folder)
+
+    for file_name in file_names:
+        img = open_image(os.path.join(src_folder, file_name))
+        pred_class,pred_idx,outputs = learner.predict(img)
+        proc = str(outputs[pred_idx])[9:11]
+        if int(proc) >= 90:
+            shutil.move(os.path.join(src_folder, file_name), f'./accurate_predictions/{pred_class}_{proc}.jpg')
+        else:
+            shutil.move(os.path.join(src_folder, file_name), f'./inaccurate_predictions/{pred_class}_{proc}.jpg')
+
     result = f"breed: {pred_class}, accuracy: {proc}"
     return {'success': result}, 200
-
-@app.route('/classification')
-def classification():
-
-    path = Path('./models')
-    learner = load_learner(path, 'export.pkl')
-    
-    image = request.args['image']
-    urllib.request.urlretrieve(image, './tmp/image.jpg')
-    img = open_image('./tmp/image.jpg')
-    pred_class,pred_idx,outputs = learner.predict(img)
-
-    result = json.dumps({
-        "predictions": sorted(
-            zip(learner.data.classes, map(float, outputs)),
-            key=lambda p: p[1],
-            reverse=True
-        )
-    })
-    print(result)
-
-    return {'success': 'pong'}, 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

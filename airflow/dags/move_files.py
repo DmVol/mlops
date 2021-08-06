@@ -28,12 +28,11 @@ def _file_mover(src_folder , dst_folder):
 #Converting date into YYYY-MM-DD format
 #print(d.strftime('%Y-%m-%d'))
 #we need yesterday and today date formats, but prefix and suffix are the same in our example.
-file_suffix=".jpg"
 
 with airflow.DAG( "file_sensor_example", default_args= default_args, schedule_interval= "@once"  ) as dag:
     start_task  = DummyOperator(  task_id= "start" )
     stop_task   = DummyOperator(  task_id= "stop"  )
     sensor_task = FileSensor( task_id= "file_sensor_task", poke_interval= 30,  filepath= "/bitnami/new_images/" )
-    put_file    = PythonOperator(task_id='move_new_images', python_callable=_file_mover, op_args=['/bitnami/new_images/', '/bitnami/load_images/'])
+    put_file    = PythonOperator(task_id='move_new_images', python_callable=_file_mover, op_args=['/bitnami/new_images/', '/bitnami/ml_image_processing/'])
 
 start_task >> sensor_task >> put_file >> stop_task

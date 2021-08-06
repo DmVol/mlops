@@ -28,8 +28,8 @@ services:
         - AIRFLOW_LOAD_EXAMPLES=no
       volumes:
         - airflow_scheduler_data:/bitnami
-        - ./new_images:/bitnami/new_images
-        - ./app/tmp:/bitnami/load_images
+        - ./image_store/new_images:/bitnami/new_images
+        - ./image_store/ml_image_processing:/bitnami/ml_image_processing
         - ./airflow/dags:/opt/bitnami/airflow/dags
         - ./airflow/requirements.txt:/bitnami/python/requirements.txt
     airflow-worker:
@@ -44,8 +44,8 @@ services:
         - AIRFLOW_WEBSERVER_HOST=airflow
       volumes:
         - airflow_worker_data:/bitnami
-        - ./new_images:/bitnami/new_images
-        - ./app/tmp/:/bitnami/load_images
+        - ./image_store/new_images:/bitnami/new_images
+        - ./image_store/ml_image_processing:/bitnami/ml_image_processing
         - ./airflow/dags:/opt/bitnami/airflow/dags
         - ./airflow/requirements.txt:/bitnami/python/requirements.txt
     airflow:
@@ -61,8 +61,8 @@ services:
       volumes:
         - airflow_data:/bitnami
         - ./airflow/dags:/opt/bitnami/airflow/dags
-        - ./new_images:/bitnami/new_images
-        - ./app/tmp:/bitnami/load_images
+        - ./image_store/new_images:/bitnami/new_images
+        - ./image_store/ml_image_processing:/bitnami/ml_image_processing
         - ./airflow/requirements.txt:/bitnami/python/requirements.txt
     ml-flask:
         container_name: ml-flask
@@ -72,6 +72,9 @@ services:
           - "5000:5000"
         volumes:
           - ./app:/app
+          - ./image_store/ml_image_processing:/app/ml_image_processing
+          - ./image_store/accurate_predictions:/app/accurate_predictions
+          - ./image_store/inaccurate_predictions:/app/inaccurate_predictions
 
 volumes:
   airflow_scheduler_data:
