@@ -32,6 +32,6 @@ with airflow.DAG( "mlops_file_pipeline", default_args= default_args, schedule_in
                                  python_callable=_file_mover, 
                                  op_args=['/bitnami/new_images/', '/bitnami/ml_image_processing/']
                                 )
-    send_curl = BashOperator(task_id='send_curl', bash_command="curl -XGET 'ml-flask:5000/predict'")
+    send_curl = BashOperator(task_id='send_curl', bash_command="curl -XGET 'ml-flask:5500/predict'")
 
 start_task >> sensor_task >> put_file >> send_curl  >> stop_task
