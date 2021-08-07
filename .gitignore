@@ -117,3 +117,4 @@ dmypy.json
 
 # All images data
 *.jpg
+mlflow.db
