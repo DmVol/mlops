@@ -4,12 +4,11 @@ channels:
   - pytorch
   - fastai
 dependencies:
-  - pytorch
-  - torchvision
+  - pytorch==1.4.0
+  - torchvision==0.5.0
   - cuda92
   - fastprogress
-  - fastai
-  - fastai2
+  - fastai==1.0.57
   - jupyter
   - jupyterlab
   - pip:
