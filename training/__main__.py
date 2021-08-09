@@ -13,6 +13,7 @@ data = ImageDataBunch.from_name_re(path_img, fnames, pat, ds_tfms=get_transforms
 learn = cnn_learner(data, models.resnet34, metrics=error_rate)
 print("start fit")
 learn.fit_one_cycle(4)
-learn.save('stage-1')
+print("end fit")
+learn.save('/training/stage-1')
 
 time.sleep(2000)
