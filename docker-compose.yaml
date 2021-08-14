@@ -89,6 +89,17 @@ services:
         retries: 3
         start_period: 10s
       command: runServer.sh
+    ml-model-training:
+        container_name: ml-model-training
+        build:
+          context: training/
+        ports:
+          - "5550:5550"
+        volumes:
+          - ./app/models:/training/models
+          - ./data:/training/data
+        ipc: "host"
+        privileged: true
 
 volumes:
   airflow_scheduler_data:
