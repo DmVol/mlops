@@ -1,0 +1,5 @@
+outs:
+- md5: 33da17b8d05fced75a21379dc419ed97.dir
+  size: 104767781
+  nfiles: 2
+  path: variables
