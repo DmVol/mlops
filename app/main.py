@@ -14,7 +14,7 @@ def ping():
 @app.route('/predict')
 def predict():
     path = Path('./models')
-    learner = load_learner(path, 'export.pkl')
+    learner = load_learner(path, 'best_resnet34.pkl')
 
     src_folder = './ml_image_processing/'
     file_names = os.listdir(src_folder)

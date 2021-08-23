@@ -1,10 +1,8 @@
 from fastai.vision import *
 from fastai.metrics import error_rate
-import time
 import logging
 import mlflow
 from mlflow.tracking import MlflowClient
-from mlflow.entities.run import Run
 
 logging.basicConfig(level=logging.INFO)
 
@@ -28,7 +26,7 @@ def main():
     'bs': 8
     }
 
-    mlflow.set_experiment("/my-experiment")
+    mlflow.set_experiment("catsdogsrabbits-experiment")
 
     path_img = '/training/catsdogsrabbits'
     fnames = get_image_files(path_img)
