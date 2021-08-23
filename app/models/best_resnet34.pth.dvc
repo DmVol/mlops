@@ -1,4 +1,4 @@
 outs:
-- md5: 962c55dfad9c1deb8e84099ab5d66e20
-  size: 92045429
+- md5: 3b80014c7ff85d30b8863cd6169fe62d
+  size: 91829877
   path: best_resnet34.pth

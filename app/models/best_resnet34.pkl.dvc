@@ -1,4 +1,4 @@
 outs:
-- md5: 2e9c2e0820f5e9f45478ac2cbb63cb47
-  size: 87504561
+- md5: befc84d8da3a3fe21cf9067091a11ae5
+  size: 87431921
   path: best_resnet34.pkl
