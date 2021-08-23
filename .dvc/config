@@ -1,4 +1,6 @@
 [core]
-    remote = myremote
+    remote = mlops
 ['remote "myremote"']
     url = gdrive://1KV2mSSMNfmYuS6C94apg8JdbcRNCdDXR/data
+['remote "mlops"']
+    url = gdrive://1wfY2w3JiIWRctTNWmE3Fj-XAb8vcIiYw
