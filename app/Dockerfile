@@ -7,4 +7,4 @@ WORKDIR /app/
 COPY . /app/
 ENV PYTHONUNBUFFERED 1
 ENTRYPOINT ["python"]
-CMD ["main.py"]
+CMD ["__main__.py"]

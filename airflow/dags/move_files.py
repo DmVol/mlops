@@ -27,7 +27,7 @@ def _file_mover(src_folder , dst_folder):
 with airflow.DAG( "mlops_file_pipeline", default_args= default_args, schedule_interval= "@once"  ) as dag:
     start_task  = DummyOperator(task_id="start")
     stop_task   = DummyOperator(task_id="stop")
-    sensor_task = FileSensor(task_id="file_sensor_task", poke_interval=30,  filepath="/bitnami/new_images/"])
+    sensor_task = FileSensor(task_id="file_sensor_task", poke_interval=30,  filepath="/bitnami/new_images/")
     put_file    = PythonOperator(task_id='move_new_images', 
                                  python_callable=_file_mover, 
                                  op_args=['/bitnami/new_images/', '/bitnami/ml_image_processing/']

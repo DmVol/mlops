@@ -31,6 +31,8 @@ services:
         - ./image_store/new_images:/bitnami/new_images
         - ./image_store/ml_image_processing:/bitnami/ml_image_processing
         - ./airflow/dags:/opt/bitnami/airflow/dags
+        - ./image_store/labeled_data:/bitnami/labeled_data
+        - ./data:/bitnami/data
         - ./airflow/requirements.txt:/bitnami/python/requirements.txt
     airflow-worker:
       # TODO: to be reverted to use proper registry/distro on T39132
@@ -47,6 +49,8 @@ services:
         - ./image_store/new_images:/bitnami/new_images
         - ./image_store/ml_image_processing:/bitnami/ml_image_processing
         - ./airflow/dags:/opt/bitnami/airflow/dags
+        - ./image_store/labeled_data:/bitnami/labeled_data
+        - ./data:/bitnami/data
         - ./airflow/requirements.txt:/bitnami/python/requirements.txt
     airflow:
       image: docker.io/bitnami/airflow:2
@@ -63,6 +67,8 @@ services:
         - ./airflow/dags:/opt/bitnami/airflow/dags
         - ./image_store/new_images:/bitnami/new_images
         - ./image_store/ml_image_processing:/bitnami/ml_image_processing
+        - ./image_store/labeled_data:/bitnami/labeled_data
+        - ./data:/bitnami/data
         - ./airflow/requirements.txt:/bitnami/python/requirements.txt
     ml-flask:
         container_name: ml-flask
@@ -98,6 +104,7 @@ services:
         volumes:
           - ./app/models:/training/models
           - ./data:/training/data
+          - ./image_store/labeled_data:/training/labeled_data
         ipc: "host"
         privileged: true
 
